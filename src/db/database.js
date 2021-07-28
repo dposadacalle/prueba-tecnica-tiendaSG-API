@@ -9,7 +9,6 @@ exports.conectar = ({ protocol, url, username, password },
     if (username && password) {
         dburl = `${protocol}://${username}:${password}@${url}`;
     } else {
-        // eslint-disable-next-line no-unused-vars
         dburl = `${protocol}://${url}`;
     }
 
@@ -18,6 +17,7 @@ exports.conectar = ({ protocol, url, username, password },
         useNewUrlParser: true,
         useCreateIndex: true,
         useUnifiedTopology: true,
+        useFindAndModify: false
     });
 
     mongoose.set('debug', true)
@@ -34,12 +34,12 @@ exports.conectar = ({ protocol, url, username, password },
         console.log(`Database connection error: ${err}`);
     });
 
-    process.on('SIGINT', () => {
-        mongoose.connection.close(() => {
-            console.log('Database connection disconnected through app termination');
-            process.exit(0);
-        });
-    });
+    // process.on('SIGINT', () => {
+    //     mongoose.connection.close(() => {
+    //         console.log('Database connection disconnected through app termination');
+    //         process.exit(0);
+    //     });
+    // });
 };
 
 exports.disconnect = () => {

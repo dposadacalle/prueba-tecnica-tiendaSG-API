@@ -29,7 +29,7 @@ ClienteSchema.statics.consultarClientes = async function() {
 
         let cliente = this;
 
-        obj.dta = await cliente.find({}).lean();
+        obj.dta = await cliente.find({});
 
     } catch (error) {
 
@@ -42,7 +42,7 @@ ClienteSchema.statics.consultarClientes = async function() {
 }
 
 // Método que actualiza un cliente por su id 
-ClienteSchema.statics.actualizarPorIdCliente = function(idCliente, data) {
+ClienteSchema.statics.actualizarPorIdCliente = async function(idCliente, data) {
 
     const obj = {
         dta: null,
@@ -51,22 +51,43 @@ ClienteSchema.statics.actualizarPorIdCliente = function(idCliente, data) {
 
     try {
 
-        let cliente = this;
-
-        obj.dta = await cliente.findByIdAndUpdate({ _id: idCliente }, {
+        obj.dta = await this.findOneAndUpdate({ _id: idCliente }, {
             $set: {
-                clienteIdent: data.ident,
+                clienteIdent: data.clienteIdent,
                 nombre: data.nombre,
-                telefono: data.fechaNacimiento,
+                apellido: data.apellido,
+                telefono: data.telefono,
+                fechaNacimiento: data.fechaNacimiento,
                 edad: data.edad
             }
-        });
+        }, { new: true });
     } catch (error) {
 
         obj.dta = null;
 
         obj.err = true;
 
+    }
+
+    return obj;
+}
+
+/** Método que elimina de la entidad cliente por el ID  */
+ClienteSchema.statics.eliminarClientePorId = async function(idCliente) {
+
+    const obj = {
+        dta: null,
+        err: false
+    };
+
+    try {
+
+        obj.dta = await this.findOneAndDelete({ _id: idCliente });
+    } catch (error) {
+
+        obj.dta = null;
+
+        obj.err = true;
     }
 
     return obj;

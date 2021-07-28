@@ -39,9 +39,17 @@ const rutaFactura = require('./routes/factura.route');
 app.use(morgan("dev"));
 
 // Usamos las rutas 
-// app.use('/productos', rutaCliente);
+app.use('/clientes', rutaCliente);
 // app.use('/clientes', rutaProducto);
 // app.use('/rutaFactura', rutaFactura);
+
+app.use((req, res, next) => {
+    next({
+        message: 'Route not found',
+        statusCode: 404,
+        level: 'warn',
+    });
+});
 
 // Connect to database
 database.conectar(config.database, {

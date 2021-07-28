@@ -34,7 +34,6 @@ const ClienteSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
-
-});
+}, { timestamps: true });
 
 module.exports = { ClienteSchema };
