@@ -1,5 +1,9 @@
+// Importamos los Dao's
 const { Cliente } = require('./../dtos/cliente.dto');
+
 const { utils } = require('./../utils/util');
+
+const { ObjectID } = require('mongodb');
 
 const obtenerTodosClientes = async(req, res) => {
 
@@ -52,6 +56,10 @@ const actualizarCliente = async(req, res) => {
 
     const idCliente = req.params.id;
 
+    if (!ObjectID.isValid(idCliente)) {
+        res.send({ status: 500, message: 'Parametro Invalido' });
+    }
+
     console.log(idCliente);
     const body = {
         clienteIdent: req.body.clienteIdent,
@@ -86,11 +94,15 @@ const actualizarCliente = async(req, res) => {
 
 const eliminarCliente = async(req, res) => {
 
-    const { id } = req.params;
+    const idCliente = req.params.id;
+
+    if (!ObjectID.isValid(idCliente)) {
+        res.send({ status: 500, message: 'Parametro Invalido' });
+    }
 
     try {
 
-        const cliente = await Cliente.eliminarClientePorId(id);
+        await Cliente.eliminarClientePorId(idCliente);
 
         res.send({
             message: 'El cliente se ha eliminado exitosamente.'

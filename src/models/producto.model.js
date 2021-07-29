@@ -10,7 +10,6 @@ const ProductoSchema = new mongoose.Schema({
 
     nombreProducto: {
         type: String,
-        trim: true,
         required: true
     },
 
