@@ -41,7 +41,7 @@ app.use(morgan("dev"));
 // Usamos las rutas 
 app.use('/clientes', rutaCliente);
 app.use('/productos', rutaProducto);
-// app.use('/rutaFactura', rutaFactura);
+app.use('/rutaFactura', rutaFactura);
 
 app.use((req, res, next) => {
     next({

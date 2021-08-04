@@ -90,6 +90,30 @@ ProductoSchema.statics.eliminarProductoPorId = async function(idProducto) {
 
 }
 
+ProductoSchema.statics.actualizarCantidadInventarioPoridProducto = async function(idProducto, cantidad){
+
+     const obj = {
+        dta: null,
+        err: false
+    };
+
+    try {
+
+        obj.dta = await this.findOneAndUpdate({ _id: idProducto }, {
+            $set: { cantidadInventario: cantidad }
+        }, { new: true });
+    } catch (error) {
+
+        obj.dta = null;
+
+        obj.err = true;
+
+    }
+
+    return obj;
+
+}
+
 const Producto = mongoose.model('Producto', ProductoSchema);
 
 module.exports = { Producto };

@@ -1,5 +1,9 @@
 const mongoose = require('mongoose');
 
+const Cliente = mongoose.model('Cliente');
+
+const Producto = mongoose.model('Producto');
+
 const FacturaSchema = new mongoose.Schema({
 
     numeroFactura: {
@@ -25,8 +29,18 @@ const FacturaSchema = new mongoose.Schema({
     totalVenta: {
         type: Number,
         required: true
+    },
+
+    idCliente: {
+        type: mongoose.Types.ObjectId,
+        required: true
+    },
+
+    idProducto: {
+        type: mongoose.Types.ObjectId,
+        required: true
     }
 
 }, { timestamps: true });
 
-module.exports = FacturaSchema;
+module.exports = { FacturaSchema };
